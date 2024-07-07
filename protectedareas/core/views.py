@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .models import ProtectedArea, Location
-from .serializers import  LocationSerializer
 import csv
 
 def import_wdoecm_data(request):
