@@ -6,7 +6,7 @@ def index(request):
     return render(request, 'index.html')
 
 def import_wdoecm_data(request):
-    file_path = 'protectedareas\core\csv-data\WDOECM_data.csv' 
+    file_path = 'core\csv-data\WDOECM_data.csv' 
     c = 0
     with open(file_path, 'r') as file:
         reader = csv.DictReader(file)
@@ -40,7 +40,7 @@ def import_wdoecm_data(request):
     return render(request, 'import_csv_data.html', {'insert_count': c, 'file_path': file_path})
 
 def import_location_data(request):
-    file_path = 'protectedareas\core\csv-data\LOCATION_data.csv' 
+    file_path = 'core\csv-data\LOCATION_data.csv' 
     c = 0
     with open(file_path, 'r') as file:
         reader = csv.DictReader(file)

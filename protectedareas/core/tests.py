@@ -1,8 +1,23 @@
 from django.test import TestCase
-from django.models import ProtectedArea,Location
+from .models import ProtectedArea,Location
 from rest_framework import serializers
-
+import requests
+import json
 # Create your tests here. 
+
+#test post requests
+class PostRequestTestCase(TestCase):
+  def test_post_api(self):
+    data = {
+      'sub_loc': 'ZA-TEST',
+      'province': 'Awesomeland'
+    }
+    headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
+    response = self.client.post('/locations/',data)
+    location = Location.objects.get(sub_loc='ZA-TEST')
+    # Post request to create new location and check if the new location exists
+    self.assertEqual(location.sub_loc, 'ZA-TEST')    
+
 #location cant be equal to sub_loc
 class ProtectedAreaTestCase(TestCase):
   """

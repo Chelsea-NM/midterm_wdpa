@@ -16,12 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('import-wdpaoecm-data', views.import_wdoecm_data, name='import-wdpaoecm-data'),
-    path('import-location-data', views.import_location_data, name='import-location-data'),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', include('core.urls')),
 ]
