@@ -20,8 +20,8 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('import-wdpaoecm-data', views.import_wdoecm_data, name='import-wdpaoecm-data'),
-    #path('import-location-data', views.import_location_data, name='import-location-data'),
+    path('import-wdpaoecm-data', views.import_wdoecm_data, name='import-wdpaoecm-data'),
+    path('import-location-data', views.import_location_data, name='import-location-data'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', include('core.urls')),
 ]

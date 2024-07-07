@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import ProtectedArea, Location
 import csv
 
+def index(request):
+    return render(request, 'index.html')
+
 def import_wdoecm_data(request):
     file_path = 'protectedareas\core\csv-data\WDOECM_data.csv' 
     c = 0
