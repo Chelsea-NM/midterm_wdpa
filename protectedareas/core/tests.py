@@ -1,8 +1,5 @@
 from django.test import TestCase
 from .models import ProtectedArea,Location
-from rest_framework import serializers
-import requests
-import json
 # Create your tests here. 
 
 #test post requests

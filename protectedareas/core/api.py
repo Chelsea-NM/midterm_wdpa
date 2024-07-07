@@ -1,10 +1,9 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 from .models import ProtectedArea, Location
 from .serializers import ProtectedAreaSerializer, LocationSerializer
 from django.db import connection
-
+from django.shortcuts import render
 import json
 from django.http import HttpResponse
 
@@ -18,20 +17,24 @@ def location_list(request):
     elif request.method == 'POST':
         serializer = LocationSerializer(data=request.POST)
         if serializer.is_valid():
-            #print('serializer.is_valid()')
             serializer.save()
             return JsonResponse(serializer.data, status=201)        
         return JsonResponse(serializer.errors, status=400)
     
 @csrf_exempt  
-def update_location_province(request, sub_loc,province_name):
+def update_location_province(request):
     if request.method == 'POST':
-        location = Location.objects.get(sub_loc=sub_loc)
-        if(location is not None):        
-            location.province = province_name
-            location.save()
-            return HttpResponse('Location update for sub_loc: '+sub_loc)
-        return HttpResponse('Location does not exist')
+        try:
+            location = Location.objects.get(sub_loc=request.POST['sub_loc'])
+            if(location is not None):        
+                location.province = request.POST['province']
+                location.save()
+                return HttpResponse('Location updated for sub_loc: '+request.POST['sub_loc'])
+            return HttpResponse('Location does not exist or input data is invalid')  
+        except Exception as e:
+            return HttpResponse('Input data is invalid or sub_loc does not exist')  
+    if request.method == 'GET':
+        return render(request, 'update_location.html') 
     
 @csrf_exempt
 def protected_area_list(request):
@@ -61,5 +64,4 @@ def test_function(request):
             cursor.execute("SELECT COUNT(*) FROM core_protectedarea")
             row = cursor.fetchone()
             count_value = row[0]
-            #total_protected_areas = ProtectedArea.objects.raw("SELECT COUNT(*) FROM core_protectedarea")
             return HttpResponse(json.dumps(serializer.data, indent=4), content_type="application/json")
